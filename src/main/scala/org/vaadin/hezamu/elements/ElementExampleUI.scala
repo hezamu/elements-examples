@@ -5,6 +5,7 @@ import org.vaadin.elements._
 import elemental.json.JsonArray
 import com.vaadin.ui.JavaScriptFunction
 import java.util.Optional
+import com.vaadin.annotations.JavaScript
 
 object Implicits {
   implicit class JavaOptional2Option[T](o: Optional[T]) {
@@ -23,6 +24,7 @@ class ElementExampleUI extends UI(title = "elements-example", theme = "valo") {
   content = new TabSheet {
     addTab(HTML5InputsDemo, "HTML5 inputs")
     addTab(PaperElementsDemo, "Paper elements")
+    addTab(ModifyingHTMLDemo, "Modifying HTML")
   }
 
   def HTML5InputsDemo = new CssLayout {
@@ -56,6 +58,27 @@ class ElementExampleUI extends UI(title = "elements-example", theme = "valo") {
   }
 
   def ModifyingHTMLDemo = new CssLayout {
-    // TODO
+    object PaperSlider {
+      def create = Elements.create(classOf[PaperSlider])
+    }
+
+    @Tag("paper-slider")
+    @Import("VAADIN/bower_components/paper-slider/paper-slider.html")
+    trait PaperSlider extends Element {
+      def setValue(value: Double): Double
+
+      @UpdatedBy("core-change")
+      def getValue: Double
+    }
+
+    val slider = PaperSlider.create
+    slider.setValue(50)
+
+    slider.addEventListener("change", new JavaScriptFunction {
+      override def call(e: JsonArray) =
+        Notification show s"Value changed to ${slider.getAttribute("value")}"
+    })
+
+    ElementIntegration getRoot this.p appendChild slider
   }
 }
