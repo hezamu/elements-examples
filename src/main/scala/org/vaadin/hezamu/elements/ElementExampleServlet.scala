@@ -15,9 +15,9 @@ class ElementExampleServlet extends ScaladinServlet {
   override def init(servletConfig: ServletConfig) {
     super.init(servletConfig)
 
-    service.sessionInitListeners += { event =>
-      event.session.bootstrapPageListeners += { response =>
-        response.document.head.appendElement("script").attr("src", "VAADIN/bower_components/webcomponentsjs/webcomponents.js")
+    service.sessionInitListeners += {
+      _.session.bootstrapPageListeners += {
+        _.document.head.appendElement("script").attr("src", "VAADIN/bower_components/webcomponentsjs/webcomponents.js")
       }
     }
   }

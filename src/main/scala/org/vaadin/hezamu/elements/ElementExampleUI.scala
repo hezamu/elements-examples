@@ -44,7 +44,7 @@ class ElementExampleUI extends UI(title = "elements-example", theme = "valo") {
     input.setAttribute("value", "0")
   }
 
-  def PaperElementsDemo = new CssLayout {
+  def ModifyingHTMLDemo = new CssLayout {
     lazy val root: Root = ElementIntegration.getRoot(button.p)
 
     val button = add(Button("Click to modify my styles", { e =>
@@ -57,7 +57,7 @@ class ElementExampleUI extends UI(title = "elements-example", theme = "valo") {
     root.fetchDom(null) // Fetch dom so that it's available when clicking
   }
 
-  def ModifyingHTMLDemo = new CssLayout {
+  def PaperElementsDemo = new CssLayout {
     object PaperSlider {
       def create = Elements.create(classOf[PaperSlider])
     }
